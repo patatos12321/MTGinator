@@ -1,6 +1,6 @@
 using System;
 
-namespace MTGinator3
+namespace MTGinator
 {
     public class WeatherForecast
     {

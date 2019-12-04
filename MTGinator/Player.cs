@@ -1,4 +1,4 @@
-namespace MTGinator3
+namespace MTGinator
 {
     public class Player
     {
