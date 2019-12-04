@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MTGinator3.Controllers
+namespace MTGinator.Controllers
 {
     [ApiController]
     [Route("[controller]")]

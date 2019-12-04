@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MTGinator.Repositories;
 
-namespace MTGinator3.Controllers
+namespace MTGinator.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,21 +15,24 @@ namespace MTGinator3.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IPlayerRepository _playerRepository;
 
-        public PlayersController(ILogger<WeatherForecastController> logger)
+        public PlayersController(ILogger<WeatherForecastController> logger, IPlayerRepository playerRepository)
         {
             _logger = logger;
+            _playerRepository = playerRepository;
         }
 
         [HttpGet]
         public IEnumerable<Player> Get()
         {
-            List<Player> players = new List<Player>();
-            players.Add(new Player { Name = "Nicolas L.", Score = 0 });
-            players.Add(new Player { Name = "Ayrton W.", Score = 0 });
-            players.Add(new Player { Name = "Jo R. C.", Score = 0 });
+            return _playerRepository.GetPlayers();
+        }
 
-            return players;
+        [HttpPost]
+        public void Post(IEnumerable<Player> players)
+        {
+            _playerRepository.SavePlayers(players);
         }
     }
 }
