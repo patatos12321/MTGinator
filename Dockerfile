@@ -11,4 +11,6 @@ WORKDIR /app
 VOLUME /db
 ENV DATABASEPATH=/db/db.db
 COPY --from=build /app/MTGinator/out ./
+EXPOSE 80
+EXPOSE 443
 ENTRYPOINT ["dotnet", "MTGinator.dll"]
