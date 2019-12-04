@@ -24,15 +24,33 @@ namespace MTGinator.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Player> Get()
+        public ActionResult Get()
         {
-            return _playerRepository.GetPlayers();
+            var players = _playerRepository.GetPlayers();
+            return Ok(players);
         }
 
         [HttpPost]
-        public void Post(IEnumerable<Player> players)
+        public ActionResult Post(IEnumerable<Player> players)
         {
             _playerRepository.SavePlayers(players);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            _playerRepository.DeletePlayer(id);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public ActionResult Put(Player player)
+        {
+            _playerRepository.EditPlayer(player);
+            return Ok(player);
         }
     }
 }
