@@ -33,5 +33,11 @@ namespace MTGinator3.Controllers
 
             return players;
         }
+
+        [HttpPost]
+        public void Post(IEnumerable<Player> players)
+        {
+            return;
+        }
     }
 }
