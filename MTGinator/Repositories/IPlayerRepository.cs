@@ -7,5 +7,9 @@ namespace MTGinator.Repositories
         IEnumerable<Player> GetPlayers();
 
         void SavePlayers(IEnumerable<Player> players);
+
+        void DeletePlayer(int id);
+
+        void EditPlayer(Player player);
     }
 }

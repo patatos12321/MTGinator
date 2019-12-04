@@ -12,36 +12,62 @@ export class PlayersComponent {
 
     public players: Player[];
     public newPlayer: Player;
+    public error: string;
+    public loading: boolean;
+
     private _httpClient: HttpClient;
     private _baseUrl: string;
-    private _loading: boolean;
 
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this._httpClient = http;
         this._baseUrl = baseUrl;
-        this._loading = true;
-
-        this.RefreshData();
+        this.loading = true;
 
         this.ResetNewPlayer();
+        this.RefreshData();
     }
 
     RefreshData() {
         this._httpClient.get<Player[]>(this._baseUrl + 'players').subscribe(result => {
             this.players = result;
-            this._loading = false;
+            this.loading = false;
         }, error => console.error(error));
     }
 
     ResetNewPlayer() {
         this.newPlayer = {
             name: null,
-            score: 0
+            score: 0,
+            id: 0,
+            IsInEditMode: false
         };
     }
 
+    DeletePlayer(id: number) {
+        this.loading = true;
+
+        this._httpClient.delete(this._baseUrl + "players/" + id).subscribe(result => {
+            this.RefreshData();
+        }, error => console.error(error));
+    }
+
+    EditPlayer(player: Player) {
+        this.loading = true;
+
+        this._httpClient.put(this._baseUrl + "players/" + player.id, player).subscribe(result => {
+            this.RefreshData();
+        }, error => console.error(error));
+    }
+
     AddNewPlayer() {
-        this._loading = true;
+        if (this.newPlayer.name == null || this.newPlayer.name == "") {
+            this.error = "The player name can't be empty";
+            return;
+        }
+
+        this.error = null;
+
+        this.loading = true;
         this.players.push(this.newPlayer);
 
         this._httpClient.post(this._baseUrl + "players", this.players).subscribe(result => {
@@ -55,4 +81,6 @@ export class PlayersComponent {
 interface Player {
     name: string;
     score: number;
+    id: number;
+    IsInEditMode: boolean;
 }
