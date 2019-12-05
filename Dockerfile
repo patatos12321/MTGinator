@@ -1,16 +1,18 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS base
 WORKDIR /app
-COPY . ./
-RUN dotnet restore
-WORKDIR /app/MTGinator
-RUN apk add --no-cache nodejs npm
-RUN dotnet publish -c Release -o out
+EXPOSE 80
+EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore
+WORKDIR "/src/MTGinator"
+RUN dotnet publish "MTGinator.csproj" -c Release -o /app/publish
+
+FROM base AS final
 WORKDIR /app
 VOLUME /db
 ENV DATABASEPATH=/db/db.db
-COPY --from=build /app/MTGinator/out ./
-EXPOSE 80
-EXPOSE 443
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "MTGinator.dll"]
