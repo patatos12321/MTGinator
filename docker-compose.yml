@@ -1,0 +1,7 @@
+bot:
+  build: ./
+  container_name: mtginator
+  restart: unless-stopped
+  volumes:
+    - ./db:/db
+    - /etc/localtime:/etc/localtime:ro
