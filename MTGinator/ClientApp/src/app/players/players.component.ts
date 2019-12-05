@@ -28,7 +28,7 @@ export class PlayersComponent {
     }
 
     RefreshData() {
-        this._httpClient.get<Player[]>(this._baseUrl + 'players').subscribe(result => {
+        this._httpClient.get<Player[]>(this._baseUrl + 'api/players').subscribe(result => {
             this.players = result;
             this.loading = false;
         }, error => console.error(error));
@@ -46,7 +46,7 @@ export class PlayersComponent {
     DeletePlayer(id: number) {
         this.loading = true;
 
-        this._httpClient.delete(this._baseUrl + "players/" + id).subscribe(result => {
+        this._httpClient.delete(this._baseUrl + "api/players/" + id).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
     }
@@ -54,7 +54,7 @@ export class PlayersComponent {
     EditPlayer(player: Player) {
         this.loading = true;
 
-        this._httpClient.put(this._baseUrl + "players/" + player.id, player).subscribe(result => {
+        this._httpClient.put(this._baseUrl + "api/players/" + player.id, player).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
     }
@@ -70,7 +70,7 @@ export class PlayersComponent {
         this.loading = true;
         this.players.push(this.newPlayer);
 
-        this._httpClient.post(this._baseUrl + "players", this.players).subscribe(result => {
+        this._httpClient.post(this._baseUrl + "api/players", this.players).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
 

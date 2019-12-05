@@ -7,11 +7,11 @@ namespace MTGinator.Repositories
 {
     public class PlayerRepository : IPlayerRepository
     {
-        private string _databasePath;
+        private LiteDatabase _database;
 
         public PlayerRepository(IConfiguration config)
         {
-            _databasePath = config["DatabasePath"];
+            _database = new LiteDatabase(config["DatabasePath"]);
         }
 
         public IEnumerable<Player> GetPlayers()
@@ -45,8 +45,7 @@ namespace MTGinator.Repositories
 
         private LiteCollection<Player> GetPlayerCollection()
         {
-            var db = new LiteDatabase(_databasePath);
-            return db.GetCollection<Player>("players");
+            return _database.GetCollection<Player>("players");
         }
     }
 }
