@@ -27,7 +27,6 @@ namespace MTGinator
                 request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(new OidCollection { new Oid("1.3.6.1.5.5.7.3.1") }, false));
 
                 var certificate= request.CreateSelfSigned(new DateTimeOffset(DateTime.UtcNow.AddDays(-1)), new DateTimeOffset(DateTime.UtcNow.AddDays(3650)));
-                certificate.FriendlyName = distinguishedName.Name;
 
                 // Generate semi random password
                 var password = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 8);

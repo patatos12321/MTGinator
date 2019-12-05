@@ -5,3 +5,9 @@ bot:
   volumes:
     - ./db:/db
     - /etc/localtime:/etc/localtime:ro
+  ports:
+    - 443:443
+    - 80:80
+  environment:
+    - "ASPNETCORE_URLS=https://+;http://+"
+    - ASPNETCORE_HTTPS_PORT=443
