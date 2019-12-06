@@ -27,7 +27,7 @@ namespace MTGinator
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IRepository<Player>, PlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
