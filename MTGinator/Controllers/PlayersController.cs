@@ -9,10 +9,10 @@ namespace MTGinator.Controllers
     [Route("api/[controller]")]
     public class PlayersController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<PlayersController> _logger;
         private readonly IRepository<Player> _playerRepository;
 
-        public PlayersController(ILogger<WeatherForecastController> logger, IRepository<Player> playerRepository)
+        public PlayersController(ILogger<PlayersController> logger, IRepository<Player> playerRepository)
         {
             _logger = logger;
             _playerRepository = playerRepository;

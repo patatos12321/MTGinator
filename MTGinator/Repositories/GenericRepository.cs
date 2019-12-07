@@ -1,14 +1,16 @@
 ﻿using LiteDB;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace MTGinator.Repositories
 {
-    public abstract class AbstractRepository<T> : IRepository<T> where T : IDocument
+    public class GenericRepository<T> : IRepository<T> where T : IDocument
     {
-        protected LiteDatabase _database;
+        protected readonly LiteDatabase _database;
 
-        public AbstractRepository(IConfiguration config)
+        public GenericRepository(IConfiguration config)
         {
             _database = new LiteDatabase(config["DatabasePath"]);
         }
@@ -46,6 +48,23 @@ namespace MTGinator.Repositories
             GetLiteCollection().Delete(p => p.Id == id);
         }
 
-        protected abstract LiteCollection<T> GetLiteCollection();
+        /// <summary>
+        /// Fetch the CollectionNameAttribute to know the name of the collection.
+        /// If there isn't any, the name of the collection will be the name of the class;
+        /// </summary>
+        /// <returns></returns>
+        protected virtual LiteCollection<T> GetLiteCollection()
+        {
+            var typeInfo = typeof(T).GetTypeInfo();
+            var attrs = typeInfo.GetCustomAttributes();
+            var collectionNameAttribute = (CollectionNameAttribute)attrs.FirstOrDefault(a => a.GetType() == typeof(CollectionNameAttribute));
+
+            if (collectionNameAttribute == null)
+            {
+                return _database.GetCollection<T>(typeof(T).Name);
+            }
+
+            return _database.GetCollection<T>(collectionNameAttribute.Name);
+        }
     }
 }

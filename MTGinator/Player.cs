@@ -2,6 +2,7 @@ using LiteDB;
 
 namespace MTGinator
 {
+    [CollectionName(DbCollectionName.Player)]
     public class Player : IDocument
     {
         [BsonId]

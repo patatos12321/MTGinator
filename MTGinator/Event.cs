@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace MTGinator
 {
+    [CollectionName(DbCollectionName.Event)]
     public class Event : IDocument
     {
         [BsonId]
