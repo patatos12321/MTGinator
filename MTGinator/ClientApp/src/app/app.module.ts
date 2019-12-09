@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PlayersComponent } from './players/players.component';
+import { EventsComponent } from './events/events.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { PlayersComponent } from './players/players.component';
         HomeComponent,
         CounterComponent,
         FetchDataComponent,
-        PlayersComponent
+        PlayersComponent,
+        EventsComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,8 @@ import { PlayersComponent } from './players/players.component';
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'players', component: PlayersComponent }
+            { path: 'players', component: PlayersComponent },
+            { path: 'events', component: EventsComponent }
         ])
     ],
     providers: [],

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGinator.Repositories;
@@ -21,7 +22,60 @@ namespace MTGinator.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var events = _eventRepository.GetAll();
+            //var events = _eventRepository.GetAll();
+            var events = new List<Event>();
+            events.Add(new Event
+            {
+                Name = "Test",
+                Date = DateTime.Now,
+                ImagePath = "https://media.magic.wizards.com/xrtIRoU5ub.jpg",
+                ParticpatingPlayers = new List<Player>
+                {
+                    new Player
+                    {
+                        Name = "nic"
+                    }
+                },
+                Id = 1
+            });
+
+            events.Add(new Event
+            {
+                Name = "Autre test",
+                Date = DateTime.Now.AddDays(-12),
+                ImagePath = "https://am21.akamaized.net/tms/cnt/uploads/2019/07/Throne-of-Eldrane-information.jpg",
+                ParticpatingPlayers = new List<Player>
+                {
+                    new Player
+                    {
+                        Name = "nic"
+                    },
+                    new Player
+                    {
+                        Name = "jo"
+                    }
+                },
+                Id = 2
+            });
+
+            events.Add(new Event
+            {
+                Name = "Special edition",
+                Date = DateTime.Now.AddDays(-12),
+                ImagePath = "https://am21.akamaized.net/tms/cnt/uploads/2019/07/Throne-of-Eldrane-information.jpg",
+                ParticpatingPlayers = new List<Player>
+                {
+                    new Player
+                    {
+                        Name = "nic"
+                    },
+                    new Player
+                    {
+                        Name = "jo"
+                    }
+                },
+                Id = 2
+            });
             return Ok(events);
         }
 
