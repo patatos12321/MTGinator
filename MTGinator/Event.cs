@@ -14,6 +14,6 @@ namespace MTGinator
         public DateTime Date { get; set; }
         public bool Official { get; set; }
         [BsonRef(DbCollectionName.Player)]
-        public List<Player> ParticpatingPlayers { get; set; }
+        public List<Player> ParticipatingPlayers { get; set; }
     }
 }

@@ -47,9 +47,11 @@ interface Event {
     id: number;
     date: Date;
     official: boolean;
+    participatingPlayers: Player[];
 }
 
 interface Player {
     name: string;
     id: number;
+    score: number;
 }

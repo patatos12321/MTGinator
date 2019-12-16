@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col mb-md-4">
-    <button class="btn btn-primary" (click)="AddNewEvent()">Add new event</button>
+    <button class="btn btn-primary" [routerLink]="['/newEvent']">Add new event</button>
   </div>
 </div>
 
@@ -20,6 +20,7 @@
               <button type="button" class="btn btn-sm btn-outline-secondary" (click)="EditEvent()">Edit</button>
               <button type="button" class="btn btn-sm btn-outline-secondary" (click)="StartEvent()">Start</button>
             </div>
+            <small class="text-muted">{{ event.participatingPlayers.length.toString() }} {{ event.participatingPlayers.length > 1 ? "players" : "player" }}</small>
           </div>
         </div>
       </div>

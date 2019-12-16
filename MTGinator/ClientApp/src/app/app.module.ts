@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule, DatePipe } from '@angular/common';
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -11,6 +14,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PlayersComponent } from './players/players.component';
 import { EventsComponent } from './events/events.component';
+import { NewEventComponent } from './events/new-event.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -20,21 +25,27 @@ import { EventsComponent } from './events/events.component';
         CounterComponent,
         FetchDataComponent,
         PlayersComponent,
-        EventsComponent
+        EventsComponent,
+        NewEventComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
+        NgbModule,
+        CommonModule,
+
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'players', component: PlayersComponent },
+            { path: 'newEvent', component: NewEventComponent },
             { path: 'events', component: EventsComponent }
-        ])
+        ]),
+        NoopAnimationsModule
     ],
-    providers: [],
+    providers: [DatePipe],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
