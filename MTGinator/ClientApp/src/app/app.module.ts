@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DatePipe } from '@angular/common';
 
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -14,7 +13,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PlayersComponent } from './players/players.component';
 import { EventsComponent } from './events/events.component';
-import { NewEventComponent } from './events/new-event.component';
+import { EventComponent } from './events/event.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -26,7 +25,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         FetchDataComponent,
         PlayersComponent,
         EventsComponent,
-        NewEventComponent
+        EventComponent 
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,7 +39,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'players', component: PlayersComponent },
-            { path: 'newEvent', component: NewEventComponent },
+            { path: 'event', component: EventComponent  },
             { path: 'events', component: EventsComponent }
         ]),
         NoopAnimationsModule

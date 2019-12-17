@@ -24,6 +24,14 @@ namespace MTGinator.Controllers
             return Ok(events);
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public ActionResult Get(int id)
+        {
+            var events = _eventRepository.GetById(id);
+            return Ok(events);
+        }
+
         [HttpPost]
         public ActionResult Post(Event @event)
         {

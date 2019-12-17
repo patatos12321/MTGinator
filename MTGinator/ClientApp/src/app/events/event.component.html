@@ -14,8 +14,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 mb-md-4">
-    <input [(ngModel)]="event.date" type="date"/>
-    <!--<ngb-datepicker #dp [(ngModel)]="event.dateTemp"></ngb-datepicker>-->
+    <input [(ngModel)]="event.date" datetime="yyyy-MM-dd"/>
   </div>
 </div>
 <div class="row">
@@ -27,6 +26,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <button class="btn btn-primary" (click)="CreateEvent()">Create event</button>
+    <button class="btn btn-primary" (click)="Save()">Save</button>
+    <button class="btn btn-danger" (click)="Delete()">Delete</button>
   </div>
 </div>

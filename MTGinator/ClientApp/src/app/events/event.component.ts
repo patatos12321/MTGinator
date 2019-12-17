@@ -1,36 +1,43 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'new-event',
-    templateUrl: './new-event.component.html'
+    selector: 'event',
+    templateUrl: './event.component.html'
 })
 
 
-export class NewEventComponent {
+export class EventComponent {
 
     public event: Event;
     public error: string;
     public loading: boolean;
     public eventId: number;
 
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router, route: ActivatedRoute) {
+        this.SetBlankData();
 
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
+        if (router.getCurrentNavigation().extras.state != null) {
+          this.eventId = router.getCurrentNavigation().extras.state.id;
+        } 
+
         if (this.eventId > 0) {
             this.loading = true;
             this.RefreshData();
-        } else {
-            this.event = {
-                name: null,
-                imagePath: null,
-                id: 0,
-                date: null,
-                official: true,
-                participatingPlayers: []
-            };
         }
+    }
+
+    SetBlankData() {
+        this.event = {
+            name: null,
+            imagePath: null,
+            id: 0,
+            date: null,
+            official: true,
+            participatingPlayers: []
+        };
     }
 
     RefreshData() {
@@ -40,15 +47,15 @@ export class NewEventComponent {
         }, error => console.error(error));
     }
 
-    DeleteEvent() {
+    Delete() {
         this.loading = true;
 
         this.http.delete(this.baseUrl + "api/events/" + this.eventId).subscribe(result => {
-            this.router.navigateByUrl('/events');
+            this.router.navigate(['events']);
         }, error => console.error(error));
     }
 
-    CreateEvent() {
+    Save() {
         this.loading = true;
 
         this.http.post(this.baseUrl + "api/events", this.event).subscribe(result => {

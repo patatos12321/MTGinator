@@ -17,7 +17,7 @@
           <p class="card-text"><strong>{{ event.name }}: {{ event.date | date : "yyyy-MM-dd" }}</strong></p>
           <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="EditEvent()">Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="EditEvent(event.id)">Edit</button>
               <button type="button" class="btn btn-sm btn-outline-secondary" (click)="StartEvent()">Start</button>
             </div>
             <small class="text-muted">{{ event.participatingPlayers.length.toString() }} {{ event.participatingPlayers.length > 1 ? "players" : "player" }}</small>

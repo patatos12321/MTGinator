@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'events',
@@ -14,30 +14,22 @@ export class EventsComponent {
     public error: string;
     public loading: boolean;
 
-    private _httpClient: HttpClient;
-    private _baseUrl: string;
-
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this._httpClient = http;
-        this._baseUrl = baseUrl;
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
         this.loading = true;
 
         this.RefreshData();
     }
 
     RefreshData() {
-        this._httpClient.get<Event[]>(this._baseUrl + 'api/events').subscribe(result => {
+        this.http.get<Event[]>(this.baseUrl + 'api/events').subscribe(result => {
             this.events = result;
             this.loading = false;
         }, error => console.error(error));
     }
 
-    DeleteEvent(id: number) {
+    EditEvent(id: number) {
         this.loading = true;
-
-        this._httpClient.delete(this._baseUrl + "api/events/" + id).subscribe(result => {
-            this.RefreshData();
-        }, error => console.error(error));
+        this.router.navigate(['/event/'], { state: { id: id } });
     }
 }
 

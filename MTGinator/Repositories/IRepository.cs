@@ -6,6 +6,8 @@ namespace MTGinator.Repositories
     {
         IEnumerable<T> GetAll();
 
+        T GetById(int id);
+
         void Save(T document);
 
         void Save(IEnumerable<T> document);

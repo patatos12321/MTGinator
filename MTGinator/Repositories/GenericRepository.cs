@@ -20,6 +20,11 @@ namespace MTGinator.Repositories
             return GetLiteCollection().FindAll();
         }
 
+        public virtual T GetById(int id)
+        {
+            return GetLiteCollection().FindOne(d => d.Id == id);
+        }
+
         public virtual void Save(T document)
         {
             var collection = GetLiteCollection();
