@@ -2,7 +2,7 @@ using LiteDB;
 using System;
 using System.Collections.Generic;
 
-namespace MTGinator
+namespace MTGinator.Models
 {
     [CollectionName(DbCollectionName.Event)]
     public class Event : IDocument

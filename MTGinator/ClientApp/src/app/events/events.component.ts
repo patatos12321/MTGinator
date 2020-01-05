@@ -31,6 +31,11 @@ export class EventsComponent {
         this.loading = true;
         this.router.navigate(['/event/'], { state: { id: id } });
     }
+
+    StartEvent(id: number) {
+        this.loading = true;
+        this.router.navigate(['/event-in-progress/'], { state: { id: id } });
+    }
 }
 
 interface Event {

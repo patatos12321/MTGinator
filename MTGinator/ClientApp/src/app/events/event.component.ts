@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EventComponent {
 
     public event: Event;
+    public possiblePlayers: PlayerModel[];
     public error: string;
     public loading: boolean;
     public eventId: number;
@@ -25,8 +26,10 @@ export class EventComponent {
 
         if (this.eventId > 0) {
             this.loading = true;
-            this.RefreshData();
+            this.RefreshEvent();
         }
+
+        this.RefreshPlayers();
     }
 
     SetBlankData() {
@@ -40,7 +43,24 @@ export class EventComponent {
         };
     }
 
-    RefreshData() {
+    RefreshPlayers() {
+        this.http.get<Player[]>(this.baseUrl + 'api/players').subscribe(result => {
+            this.possiblePlayers = [];
+
+            result.forEach(player => {
+                var isSelected = this.event.participatingPlayers.find(p => p.id == player.id) != null;
+
+                this.possiblePlayers.push({
+                    name: player.name,
+                    id: player.id,
+                    selected: isSelected
+                });
+            })
+
+        }, error => console.error(error));
+    }
+
+    RefreshEvent() {
         this.http.get<Event>(this.baseUrl + 'api/events/' + this.eventId).subscribe(result => {
             this.event = result;
             this.loading = false;
@@ -57,6 +77,16 @@ export class EventComponent {
 
     Save() {
         this.loading = true;
+
+        this.event.participatingPlayers.length = 0;
+        this.possiblePlayers.forEach(player => {
+            if (player.selected) {
+                this.event.participatingPlayers.push({
+                    id: player.id,
+                    name: player.name
+                });
+            }
+        })
 
         this.http.post(this.baseUrl + "api/events", this.event).subscribe(result => {
             this.router.navigate(['/events']);
@@ -76,5 +106,10 @@ interface Event {
 interface Player {
     name: string;
     id: number;
-    score: number;
+}
+
+interface PlayerModel {
+    name: string;
+    id: number;
+    selected: boolean;
 }

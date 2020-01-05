@@ -24,6 +24,22 @@
   </div>
 </div>
 
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="possiblePlayers">
+  <thead>
+    <tr>
+      <th>Attending</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of possiblePlayers">
+      <td><input [(ngModel)]="player.selected" placeholder="Selected" type="checkbox"/></td>
+      <td>{{ player.name }}</td>
+    </tr>
+  </tbody>
+</table>
+
 <div class="row">
   <div class="col-md-12">
     <button class="btn btn-primary" (click)="Save()">Save</button>

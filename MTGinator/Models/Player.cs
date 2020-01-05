@@ -1,6 +1,6 @@
 using LiteDB;
 
-namespace MTGinator
+namespace MTGinator.Models
 {
     [CollectionName(DbCollectionName.Player)]
     public class Player : IDocument

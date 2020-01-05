@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGinator.Repositories;
+using MTGinator.Models;
+using MTGinator.Commands;
+using MediatR;
 
 namespace MTGinator.Controllers
 {
@@ -10,11 +13,13 @@ namespace MTGinator.Controllers
     {
         private readonly ILogger<EventsController> _logger;
         private readonly IRepository<Event> _eventRepository;
+        private readonly IMediator _mediator;
 
-        public EventsController(ILogger<EventsController> logger, IRepository<Event> eventRepository)
+        public EventsController(ILogger<EventsController> logger, IRepository<Event> eventRepository, IMediator mediator)
         {
             _logger = logger;
             _eventRepository = eventRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -30,6 +35,14 @@ namespace MTGinator.Controllers
         {
             var events = _eventRepository.GetById(id);
             return Ok(events);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/next-pairings")]
+        public ActionResult Pairings(int id)
+        {
+            var command = new GetNextRound(id);
+            return Ok(_mediator.Send(command));
         }
 
         [HttpPost]

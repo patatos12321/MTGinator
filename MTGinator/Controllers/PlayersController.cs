@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGinator.Repositories;
+using MTGinator.Models;
 
 namespace MTGinator.Controllers
 {
