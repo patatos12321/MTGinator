@@ -1,0 +1,54 @@
+{
+  "id": 0,
+  "number": 1,
+  "pairings": [
+    {
+      "id": 0,
+      "players": [
+        {
+          "id": 19,
+          "name": "Dovid B.",
+          "score": 0
+        },
+        {
+          "id": 15,
+          "name": "Oli",
+          "score": 0
+        }
+      ],
+      "winningPlayer": null
+    },
+    {
+      "id": 0,
+      "players": [
+        {
+          "id": 18,
+          "name": "Ayrton W.",
+          "score": 0
+        },
+        {
+          "id": 7,
+          "name": "Jo Cuff",
+          "score": 0
+        }
+      ],
+      "winningPlayer": null
+    },
+    {
+      "id": 0,
+      "players": [
+        {
+          "id": 14,
+          "name": "JPC",
+          "score": 0
+        },
+        {
+          "id": 13,
+          "name": "Nic Longtin",
+          "score": 0
+        }
+      ],
+      "winningPlayer": null
+    }
+  ]
+}

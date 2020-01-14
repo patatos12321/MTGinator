@@ -28,8 +28,9 @@ export class EventComponent {
             this.loading = true;
             this.RefreshEvent();
         }
-
-        this.RefreshPlayers();
+        else {
+          this.RefreshPlayers();
+        }
     }
 
     SetBlankData() {
@@ -63,6 +64,8 @@ export class EventComponent {
     RefreshEvent() {
         this.http.get<Event>(this.baseUrl + 'api/events/' + this.eventId).subscribe(result => {
             this.event = result;
+            this.RefreshPlayers();
+
             this.loading = false;
         }, error => console.error(error));
     }

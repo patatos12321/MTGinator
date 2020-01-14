@@ -13,6 +13,9 @@ namespace MTGinator.Models
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
         public bool Official { get; set; }
+
+        public List<Round> Rounds { get; set; }
+
         [BsonRef(DbCollectionName.Player)]
         public List<Player> ParticipatingPlayers { get; set; }
     }

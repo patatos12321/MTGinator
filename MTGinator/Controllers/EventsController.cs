@@ -33,16 +33,17 @@ namespace MTGinator.Controllers
         [Route("{id:int}")]
         public ActionResult Get(int id)
         {
-            var events = _eventRepository.GetById(id);
-            return Ok(events);
+            var @event = _eventRepository.GetById(id);
+            return Ok(@event);
         }
 
         [HttpGet]
-        [Route("{id:int}/next-pairings")]
-        public ActionResult Pairings(int id)
+        [Route("{id:int}/next-round")]
+        public ActionResult NextRound(int id)
         {
             var command = new GetNextRound(id);
-            return Ok(_mediator.Send(command));
+            var round = _mediator.Send(command).Result;
+            return Ok(round);
         }
 
         [HttpPost]

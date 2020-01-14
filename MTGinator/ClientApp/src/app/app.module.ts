@@ -14,6 +14,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PlayersComponent } from './players/players.component';
 import { EventsComponent } from './events/events.component';
 import { EventComponent } from './events/event.component';
+import { EventInProgressComponent } from './events/event-in-progress.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         FetchDataComponent,
         PlayersComponent,
         EventsComponent,
+        EventInProgressComponent,
         EventComponent 
     ],
     imports: [
@@ -39,7 +41,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'players', component: PlayersComponent },
-            { path: 'event', component: EventComponent  },
+            { path: 'event', component: EventComponent },
+            { path: 'event-in-progress', component: EventInProgressComponent },
             { path: 'events', component: EventsComponent }
         ]),
         NoopAnimationsModule

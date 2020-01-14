@@ -28,6 +28,7 @@ namespace MTGinator
                 configuration.RootPath = "ClientApp/dist";
             });
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IEventRepository), typeof(EventRepository));
 
             services.AddMediatR(typeof(Startup).Assembly);
         }
