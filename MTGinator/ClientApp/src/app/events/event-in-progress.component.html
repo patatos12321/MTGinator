@@ -2,9 +2,9 @@
 
 <p *ngIf="loading"><em>Loading...</em></p>
 
-<div class="row" *ngFor="let round of event.Rounds">
+<div class="row" *ngFor="let round of event.rounds">
   <div class="row" *ngFor="let pairing of round.pairings">
-    <div class="col-md-4" *ngFor="let player of pairing.player">
+    <div class="col-md-4" *ngFor="let player of pairing.players">
       {{player.name}}
     </div>
   </div>
