@@ -1,13 +1,86 @@
-<h1 id="tableLabel">GAME NIGHT BITCHES</h1>
+<h1 id="GameNightBitches" class="mb-4">GAME NIGHT BITCHES</h1>
 
 <p *ngIf="loading"><em>Loading...</em></p>
 
-<div class="row" *ngFor="let round of event.rounds">
-  <div class="row" *ngFor="let pairing of round.pairings">
-    <div class="col-md-4" *ngFor="let player of pairing.players">
-      {{player.name}}
+<!--Rounds-->
+<div class="row mb-4" *ngFor="let round of event.rounds">
+  <div class="col-md-12">
+    <h4>Round #{{round.number}}</h4>
+    <table class='table table-striped'>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Player 1</th>
+          <th></th>
+          <th>Player2</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pairing of round.pairings">
+          <td>
+            <button type="button" class="btn btn-outline-secondary" (click)="SetPairingWinner(pairing, pairing.players[0])">Set winner</button>
+          </td>
+          <td [ngStyle]="pairing.players[0]==pairing.winningPlayer?{'background-color':'lawngreen'} : {}">
+            {{pairing.players[0].name}}
+          </td>
+          <td>VS</td>
+          <td [ngStyle]="pairing.players[1]==pairing.winningPlayer?{'background-color':'lawngreen'} : {}">
+            {{pairing.players[1].name}}
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-secondary" (click)="SetPairingWinner(pairing, pairing.players[1])">Set winner</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!--Results-->
+<div *ngIf="!this.eventInProgress">
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <h2>Results</h2>
+      <table class='table table-striped'>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>NbWin</th>
+            <th>Place</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of results">
+            <td>{{result.player.name}}</td>
+            <td>{{result.nbWin}}</td>
+            <td>{{result.place}}</td>
+            <td>{{result.score}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
 
+<!--Buttons-->
+<div *ngIf="this.eventInProgress">
+  <div class="row mb-4" *ngIf="this.roundInProgress">
+    <div class="col">
+      <button type="button" class="btn btn-outline-secondary" (click)="SubmitRound()">Complete Round</button>
+    </div>
+  </div>
+  <div class="row mb-4" *ngIf="!this.roundInProgress">
+    <div class="col">
+      <button type="button" class="btn btn-outline-secondary" (click)="NextRound()">Another Round!!!!!</button>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col">
+      <button type="button" class="btn btn-outline-primary" (click)="GetResults()">Finish event</button>
+    </div>
+  </div>
+</div>

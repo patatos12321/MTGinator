@@ -12,10 +12,10 @@ namespace MTGinator.Controllers
     public class EventsController : ControllerBase
     {
         private readonly ILogger<EventsController> _logger;
-        private readonly IRepository<Event> _eventRepository;
+        private readonly IEventRepository _eventRepository;
         private readonly IMediator _mediator;
 
-        public EventsController(ILogger<EventsController> logger, IRepository<Event> eventRepository, IMediator mediator)
+        public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, IMediator mediator)
         {
             _logger = logger;
             _eventRepository = eventRepository;
@@ -35,15 +35,6 @@ namespace MTGinator.Controllers
         {
             var @event = _eventRepository.GetById(id);
             return Ok(@event);
-        }
-
-        [HttpGet]
-        [Route("{id:int}/next-round")]
-        public ActionResult NextRound(int id)
-        {
-            var command = new GetNextRound(id);
-            var round = _mediator.Send(command).Result;
-            return Ok(round);
         }
 
         [HttpPost]
@@ -67,6 +58,34 @@ namespace MTGinator.Controllers
         {
             _eventRepository.Save(@event);
             return Ok(@event);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/next-round")]
+        public ActionResult NextRound(int id)
+        {
+            var command = new GetNextRound(id);
+            var round = _mediator.Send(command).Result;
+            return Ok(round);
+        }
+
+        [HttpPost]
+        [Route("{id:int}/round")]
+        public ActionResult SaveRound(int id, Round round)
+        {
+            var @event = _eventRepository.GetById(id);
+            @event.Rounds.Add(round);
+            _eventRepository.Save(@event);
+            return Ok(round);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/results")]
+        public ActionResult Results(int id)
+        {
+            var command = new GetEventResults(id);
+            var results = _mediator.Send(command).Result;
+            return Ok(results);
         }
     }
 }

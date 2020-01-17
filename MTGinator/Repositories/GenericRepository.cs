@@ -71,5 +71,19 @@ namespace MTGinator.Repositories
 
             return _database.GetCollection<T>(collectionNameAttribute.Name);
         }
+
+        protected virtual LiteCollection<R> GetLiteCollectionForType<R>()
+        {
+            var typeInfo = typeof(R).GetTypeInfo();
+            var attrs = typeInfo.GetCustomAttributes();
+            var collectionNameAttribute = (CollectionNameAttribute)attrs.FirstOrDefault(a => a.GetType() == typeof(CollectionNameAttribute));
+
+            if (collectionNameAttribute == null)
+            {
+                return _database.GetCollection<R>(typeof(T).Name);
+            }
+
+            return _database.GetCollection<R>(collectionNameAttribute.Name);
+        }
     }
 }
