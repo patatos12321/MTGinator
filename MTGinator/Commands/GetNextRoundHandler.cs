@@ -44,9 +44,14 @@ namespace MTGinator.Commands
 
             for (int i = 0; i < playerArray.Length / 2; i++)
             {
+                int nbOfTrys = 0;
                 bool isOnlyUniquePairings = true;
                 do
                 {
+                    if (nbOfTrys > 10000)
+                    {
+                        return Task.FromResult(new Round());
+                    }
                     nextRound.Pairings = new List<Pairing>();
                     HandleFirstRound(nextRound, playerArray);
                     isOnlyUniquePairings = true;
@@ -66,6 +71,7 @@ namespace MTGinator.Commands
                         }
                     }
 
+                    nbOfTrys++;
                 } while (!isOnlyUniquePairings);
             }
 

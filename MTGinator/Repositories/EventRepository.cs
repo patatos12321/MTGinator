@@ -26,6 +26,11 @@ namespace MTGinator.Repositories
             //Fetch the players by hand because the "Include" syntax doesn't allow multiple layers of lists
             foreach (var round in @event.Rounds)
             {
+                if (round.Pairings == null)
+                {
+                    round.Pairings = new List<Pairing>();
+                }
+
                 foreach (var pairing in round.Pairings)
                 {
                     for (int playerIndex = 0; playerIndex < pairing.Players.Count; playerIndex++)

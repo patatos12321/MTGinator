@@ -40,6 +40,7 @@ namespace MTGinator.Commands
             var finalOrderedList = new List<Result>();
 
             bool skipSecond = false;
+            bool foundFirstPlaceMatchup = false;
             int lastNbWin = 0;
             int lastPlace = 0;
 
@@ -77,9 +78,21 @@ namespace MTGinator.Commands
                                     currentResult.Score = ScoreByPlace[1];
                                     finalOrderedList.Add(currentResult);
                                 }
+
+                                foundFirstPlaceMatchup = true;
                             }
                         }
                     }
+
+                    if (!foundFirstPlaceMatchup)
+                    {
+                        //First player won and never fought against second place
+                        currentResult.Place = 1;
+                        currentResult.Score = ScoreByPlace[0];
+
+                        finalOrderedList.Add(currentResult);
+                    }
+
                     continue;
                 }
                 else if(i == 1)
