@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'players',
@@ -15,12 +14,7 @@ export class PlayersComponent {
     public error: string;
     public loading: boolean;
 
-    private _httpClient: HttpClient;
-    private _baseUrl: string;
-
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this._httpClient = http;
-        this._baseUrl = baseUrl;
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
         this.loading = true;
 
         this.ResetNewPlayer();
@@ -28,7 +22,7 @@ export class PlayersComponent {
     }
 
     RefreshData() {
-        this._httpClient.get<Player[]>(this._baseUrl + 'api/players').subscribe(result => {
+        this.http.get<Player[]>(this.baseUrl + 'api/players').subscribe(result => {
             this.players = result;
             this.loading = false;
         }, error => console.error(error));
@@ -46,7 +40,7 @@ export class PlayersComponent {
     DeletePlayer(id: number) {
         this.loading = true;
 
-        this._httpClient.delete(this._baseUrl + "api/players/" + id).subscribe(result => {
+        this.http.delete(this.baseUrl + "api/players/" + id).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
     }
@@ -54,7 +48,7 @@ export class PlayersComponent {
     EditPlayer(player: Player) {
         this.loading = true;
 
-        this._httpClient.put(this._baseUrl + "api/players/" + player.id, player).subscribe(result => {
+        this.http.put(this.baseUrl + "api/players/" + player.id, player).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
     }
@@ -70,7 +64,7 @@ export class PlayersComponent {
         this.loading = true;
         this.players.push(this.newPlayer);
 
-        this._httpClient.post(this._baseUrl + "api/players", this.players).subscribe(result => {
+        this.http.post(this.baseUrl + "api/players", this.players).subscribe(result => {
             this.RefreshData();
         }, error => console.error(error));
 

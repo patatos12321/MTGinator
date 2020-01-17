@@ -1,0 +1,28 @@
+<h1 id="tableLabel">Events</h1>
+
+<p *ngIf="loading"><em>Loading...</em></p>
+
+<div class="row">
+  <div class="col mb-md-4">
+    <button class="btn btn-primary" [routerLink]="['/event']">Add new event</button>
+  </div>
+</div>
+
+  <div class="row">
+    <div class="col-md-6" *ngFor="let event of events">
+      <div class="card mb-md-4 shadow-sm">
+        <img src="{{event.imagePath}}" class="bd-placeholder-img card-img-top" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail" />
+
+        <div class="card-body">
+          <p class="card-text"><strong>{{ event.name }}: {{ event.date | date : "yyyy-MM-dd" }}</strong></p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="StartEvent(event.id)">Start</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="EditEvent(event.id)">Edit</button>
+            </div>
+            <small class="text-muted">{{ event.participatingPlayers.length.toString() }} {{ event.participatingPlayers.length > 1 ? "players" : "player" }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

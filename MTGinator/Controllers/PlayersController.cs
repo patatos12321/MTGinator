@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGinator.Repositories;
+using MTGinator.Models;
 
 namespace MTGinator.Controllers
 {
@@ -9,10 +10,10 @@ namespace MTGinator.Controllers
     [Route("api/[controller]")]
     public class PlayersController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IPlayerRepository _playerRepository;
+        private readonly ILogger<PlayersController> _logger;
+        private readonly IRepository<Player> _playerRepository;
 
-        public PlayersController(ILogger<WeatherForecastController> logger, IPlayerRepository playerRepository)
+        public PlayersController(ILogger<PlayersController> logger, IRepository<Player> playerRepository)
         {
             _logger = logger;
             _playerRepository = playerRepository;
@@ -21,14 +22,14 @@ namespace MTGinator.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var players = _playerRepository.GetPlayers();
+            var players = _playerRepository.GetAll();
             return Ok(players);
         }
 
         [HttpPost]
         public ActionResult Post(IEnumerable<Player> players)
         {
-            _playerRepository.SavePlayers(players);
+            _playerRepository.Save(players);
             return Ok();
         }
 
@@ -36,7 +37,7 @@ namespace MTGinator.Controllers
         [Route("{id:int}")]
         public ActionResult Delete(int id)
         {
-            _playerRepository.DeletePlayer(id);
+            _playerRepository.Delete(id);
             return NoContent();
         }
 
@@ -44,7 +45,7 @@ namespace MTGinator.Controllers
         [Route("{id:int}")]
         public ActionResult Put(Player player)
         {
-            _playerRepository.EditPlayer(player);
+            _playerRepository.Save(player);
             return Ok(player);
         }
     }
