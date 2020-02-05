@@ -68,6 +68,7 @@ export class EventInProgressComponent {
                 this.eventInProgress = false;
                 this.http.get<Result[]>(this.baseUrl + 'api/events/' + this.eventId + '/results').subscribe(result => {
                     this.results = result;
+                    this.loading = false;
                 });
             }
             else {
@@ -90,8 +91,17 @@ export class EventInProgressComponent {
     }
 
     SubmitRound() {
+        this.event.rounds.forEach(round => {
+            round.pairings.forEach(pairing => {
+                if (pairing.winningPlayer == null) {
+                    return;
+                }
+            })
+        })
+
         this.http.post(this.baseUrl + "api/events/" + this.eventId + "/round", this.event.rounds[this.event.rounds.length - 1]).subscribe(result => {
             this.roundInProgress = false;
+            this.loading = false;
         }, error => console.error(error));
     }
 
@@ -99,6 +109,7 @@ export class EventInProgressComponent {
         this.http.get<Result[]>(this.baseUrl + "api/events/" + this.eventId + "/results").subscribe(result => {
             this.results = result;
             this.eventInProgress = false;
+            this.loading = false;
         }, error => console.error(error));
     }
 }

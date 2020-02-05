@@ -24,7 +24,7 @@ namespace MTGinator.Commands
         public Task<IEnumerable<Result>> Handle(GetEventResults request, CancellationToken cancellationToken)
         {
             var existingResults = _resultRepository.GetByEventId(request.EventId);
-            if (existingResults != null || existingResults.Count() >= 1)
+            if (existingResults != null && existingResults.Count() >= 1)
             {
                 return Task.FromResult(existingResults);
             }

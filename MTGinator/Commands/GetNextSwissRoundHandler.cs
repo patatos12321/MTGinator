@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MTGinator.Commands
 {
-    public class GetNextSwissRoundHandler : IRequestHandler<GetNextRandomRound, Round>
+    public class GetNextSwissRoundHandler : IRequestHandler<GetNextSwissRound, Round>
     {
         private readonly IEventRepository _eventRepository;
 
@@ -20,7 +20,7 @@ namespace MTGinator.Commands
             _eventRepository = eventRepository;
         }
 
-        public Task<Round> Handle(GetNextRandomRound request, CancellationToken cancellationToken)
+        public Task<Round> Handle(GetNextSwissRound request, CancellationToken cancellationToken)
         {
             _event = GetEvent(request);
             Round nextRound = GetNewRound();
@@ -37,7 +37,17 @@ namespace MTGinator.Commands
             while (!EveryPlayerIsPaired(nextRound, playerSwissPairingArray))
             {
                 var player1 = GetUnpairedPlayerWithTheMostWin(nextRound, playerSwissPairingArray);
+                player1.IsPaired = true;
 
+                var player2 = GetNextOpposingPlayer(player1, nextRound, playerSwissPairingArray);
+                player2.IsPaired = true;
+
+                var nextPairing = new Pairing();
+                nextPairing.Players = new List<Player>();
+                nextPairing.Players.Add(player1.Player);
+                nextPairing.Players.Add(player2.Player);
+
+                nextRound.Pairings.Add(nextPairing);
             }
 
             return Task.FromResult(nextRound);
@@ -52,7 +62,7 @@ namespace MTGinator.Commands
             };
         }
 
-        private Event GetEvent(GetNextRandomRound request)
+        private Event GetEvent(GetNextSwissRound request)
         {
             var @event = _eventRepository.GetById(request.EventId);
             if (@event.Rounds == null)
