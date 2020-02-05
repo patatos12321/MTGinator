@@ -23,9 +23,9 @@ namespace MTGinator.Commands
         public Task<Round> Handle(GetNextRandomRound request, CancellationToken cancellationToken)
         {
             _event = GetEvent(request);
-            Round nextRound = GetNewRound(_event);
+            Round nextRound = GetNewRound();
 
-            var playerSwissPairingArray = _event.ParticipatingPlayers.Select(p => new PlayerSwissPairing(p, GetNbOfWins(@event, p))).ToArray();
+            var playerSwissPairingArray = _event.ParticipatingPlayers.Select(player => new PlayerSwissPairing(player, GetNbOfWins(player))).ToArray();
 
             //First round is completely random
             if (nextRound.Number == 1)
