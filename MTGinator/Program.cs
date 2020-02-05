@@ -44,8 +44,10 @@ namespace MTGinator
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 //If you want to test the SelfSignedCertificate, run in release
-#if Release
-                .UseKestrel(kestrelOptions =>
+#if DEBUG
+                
+#else
+            .UseKestrel(kestrelOptions =>
                 {
                     kestrelOptions.ConfigureHttpsDefaults(listenOptions =>
                     {
