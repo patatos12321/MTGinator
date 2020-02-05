@@ -3,11 +3,11 @@ using MTGinator.Models;
 
 namespace MTGinator.Commands
 {
-    public class GetNextRound : IRequest<Round>
+    public class GetNextRandomRound : IRequest<Round>
     {
         public int EventId { get; }
 
-        public GetNextRound(int eventId)
+        public GetNextRandomRound(int eventId)
         {
             EventId = eventId;
         }

@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace MTGinator.Commands
 {
-    public class GetNextRoundHandler : IRequestHandler<GetNextRound, Round>
+    public class GetNextRandomRoundHandler : IRequestHandler<GetNextRandomRound, Round>
     {
         private readonly IEventRepository _eventRepository;
 
-        public GetNextRoundHandler(IEventRepository eventRepository)
+        public GetNextRandomRoundHandler(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }
 
-        public Task<Round> Handle(GetNextRound request, CancellationToken cancellationToken)
+        public Task<Round> Handle(GetNextRandomRound request, CancellationToken cancellationToken)
         {
             var @event = _eventRepository.GetById(request.EventId);
             if (@event.Rounds == null)
@@ -45,7 +45,7 @@ namespace MTGinator.Commands
             for (int i = 0; i < playerArray.Length / 2; i++)
             {
                 int nbOfTrys = 0;
-                bool isOnlyUniquePairings = true;
+                bool isOnlyUniquePairings;
                 do
                 {
                     if (nbOfTrys > 10000)

@@ -37,6 +37,7 @@ export class EventInProgressComponent {
             id: 0,
             date: null,
             official: true,
+            isFinished: false,
             participatingPlayers: [],
             rounds: []
         };
@@ -62,7 +63,16 @@ export class EventInProgressComponent {
                 })
             });
 
-            this.NextRound();
+
+            if (this.event.isFinished) {
+                this.eventInProgress = false;
+                this.http.get<Result[]>(this.baseUrl + 'api/events/' + this.eventId + '/results').subscribe(result => {
+                    this.results = result;
+                });
+            }
+            else {
+              this.NextRound();
+            }
 
         }, error => console.error(error));
     }
@@ -99,6 +109,7 @@ interface Event {
     id: number;
     date: Date;
     official: boolean;
+    isFinished: boolean;
     rounds: Round[];
     participatingPlayers: Player[];
 }
