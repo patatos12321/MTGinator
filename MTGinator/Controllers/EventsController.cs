@@ -7,6 +7,7 @@ using MTGinator.Repositories;
 using MTGinator.Models;
 using MTGinator.Commands;
 using MediatR;
+using MTGinator.Extensions;
 
 namespace MTGinator.Controllers
 {
@@ -61,6 +62,15 @@ namespace MTGinator.Controllers
         {
             _eventRepository.Save(@event);
             return @event;
+        }
+
+        [HttpGet]
+        [Route("{id:int}/Players")]
+        public IEnumerable<Player> PlayersInRandomOrder(int id)
+        {
+            var @event = _eventRepository.GetById(id);
+            @event.ParticipatingPlayers.Shuffle();
+            return @event.ParticipatingPlayers;
         }
 
         [HttpGet]
