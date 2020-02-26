@@ -33,7 +33,7 @@ export class PlayersComponent {
             name: null,
             score: 0,
             id: 0,
-            IsInEditMode: false
+            isInEditMode: false
         };
     }
 
@@ -76,5 +76,5 @@ interface Player {
     name: string;
     score: number;
     id: number;
-    IsInEditMode: boolean;
+    isInEditMode: boolean;
 }

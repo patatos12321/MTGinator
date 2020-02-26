@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTGinator.Repositories;
 using MTGinator.Models;
@@ -23,25 +26,25 @@ namespace MTGinator.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public IEnumerable<Event> Get()
         {
-            var events = _eventRepository.GetAll();
-            return Ok(events);
+            var events = _eventRepository.GetAll().OrderByDescending(e => e.Date);
+            return events;
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public ActionResult Get(int id)
+        public Event Get(int id)
         {
             var @event = _eventRepository.GetById(id);
-            return Ok(@event);
+            return @event;
         }
 
         [HttpPost]
-        public ActionResult Post(Event @event)
+        public Event Post(Event @event)
         {
             _eventRepository.Save(@event);
-            return Ok(@event);
+            return @event;
         }
 
         [HttpDelete]
@@ -54,38 +57,38 @@ namespace MTGinator.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public ActionResult Put(Event @event)
+        public Event Put(Event @event)
         {
             _eventRepository.Save(@event);
-            return Ok(@event);
+            return @event;
         }
 
         [HttpGet]
         [Route("{id:int}/next-round")]
-        public ActionResult NextRound(int id)
+        public async Task<Round> NextRound(int id)
         {
             var command = new GetNextSwissRound(id);
-            var round = _mediator.Send(command).Result;
-            return Ok(round);
+            var round = await _mediator.Send(command);
+            return round;
         }
 
         [HttpPost]
         [Route("{id:int}/round")]
-        public ActionResult SaveRound(int id, Round round)
+        public Round SaveRound(int id, Round round)
         {
             var @event = _eventRepository.GetById(id);
             @event.Rounds.Add(round);
             _eventRepository.Save(@event);
-            return Ok(round);
+            return round;
         }
 
         [HttpGet]
         [Route("{id:int}/results")]
-        public ActionResult Results(int id)
+        public async Task<IEnumerable<Result>> Results(int id)
         {
             var command = new GetEventResults(id);
-            var results = _mediator.Send(command).Result;
-            return Ok(results);
+            var results = await _mediator.Send(command);
+            return results;
         }
     }
 }
