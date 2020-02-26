@@ -13,15 +13,25 @@ namespace MTGinator.Commands
         private int[] ScoreByPlace = { 25, 18, 15, 12, 10, 8, 6, 4, 2, 1 };
 
         private readonly IEventRepository _eventRepository;
+        private readonly IResultRepository _resultRepository;
 
-        public GetEventResultsHandler(IEventRepository eventRepository)
+        public GetEventResultsHandler(IEventRepository eventRepository, IResultRepository resultRepository)
         {
             _eventRepository = eventRepository;
+            _resultRepository = resultRepository;
         }
 
         public Task<IEnumerable<Result>> Handle(GetEventResults request, CancellationToken cancellationToken)
         {
+            var existingResults = _resultRepository.GetByEventId(request.EventId);
+            if (existingResults != null && existingResults.Count() >= 1)
+            {
+                return Task.FromResult(existingResults);
+            }
+
+            //if the results don't exist yet, create them
             var @event = _eventRepository.GetById(request.EventId);
+
             var results = new List<Result>();
 
             foreach (var participatingPlayer in @event.ParticipatingPlayers)
@@ -124,6 +134,11 @@ namespace MTGinator.Commands
 
                 finalOrderedList.Add(currentResult);
             }
+
+            _resultRepository.Save(finalOrderedList);
+
+            @event.IsFinished = true;
+            _eventRepository.Save(@event);
 
             return Task.FromResult((IEnumerable<Result>)finalOrderedList);
         }

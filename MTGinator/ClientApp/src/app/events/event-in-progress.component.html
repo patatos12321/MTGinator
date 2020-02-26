@@ -1,4 +1,4 @@
-<h1 id="GameNightBitches" class="mb-4">GAME NIGHT BITCHES</h1>
+<h1 id="GameNightBitches" class="mb-4">{{event.name}}</h1>
 
 <p *ngIf="loading"><em>Loading...</em></p>
 
@@ -39,7 +39,7 @@
 
 
 <!--Results-->
-<div *ngIf="!this.eventInProgress">
+<div *ngIf="this.results.length > 0">
   <div class="row mb-4">
     <div class="col-md-12">
       <h2>Results</h2>

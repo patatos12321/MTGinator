@@ -13,6 +13,7 @@ namespace MTGinator.Models
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
         public bool Official { get; set; }
+        public bool IsFinished { get; set; }
 
         public List<Round> Rounds { get; set; }
 

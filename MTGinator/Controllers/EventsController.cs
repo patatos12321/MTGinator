@@ -64,7 +64,7 @@ namespace MTGinator.Controllers
         [Route("{id:int}/next-round")]
         public ActionResult NextRound(int id)
         {
-            var command = new GetNextRound(id);
+            var command = new GetNextSwissRound(id);
             var round = _mediator.Send(command).Result;
             return Ok(round);
         }

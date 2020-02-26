@@ -37,6 +37,7 @@ export class EventInProgressComponent {
             id: 0,
             date: null,
             official: true,
+            isFinished: false,
             participatingPlayers: [],
             rounds: []
         };
@@ -62,7 +63,17 @@ export class EventInProgressComponent {
                 })
             });
 
-            this.NextRound();
+
+            if (this.event.isFinished) {
+                this.eventInProgress = false;
+                this.http.get<Result[]>(this.baseUrl + 'api/events/' + this.eventId + '/results').subscribe(result => {
+                    this.results = result;
+                    this.loading = false;
+                });
+            }
+            else {
+              this.NextRound();
+            }
 
         }, error => console.error(error));
     }
@@ -80,8 +91,17 @@ export class EventInProgressComponent {
     }
 
     SubmitRound() {
+        this.event.rounds.forEach(round => {
+            round.pairings.forEach(pairing => {
+                if (pairing.winningPlayer == null) {
+                    return;
+                }
+            })
+        })
+
         this.http.post(this.baseUrl + "api/events/" + this.eventId + "/round", this.event.rounds[this.event.rounds.length - 1]).subscribe(result => {
             this.roundInProgress = false;
+            this.loading = false;
         }, error => console.error(error));
     }
 
@@ -89,6 +109,7 @@ export class EventInProgressComponent {
         this.http.get<Result[]>(this.baseUrl + "api/events/" + this.eventId + "/results").subscribe(result => {
             this.results = result;
             this.eventInProgress = false;
+            this.loading = false;
         }, error => console.error(error));
     }
 }
@@ -99,6 +120,7 @@ interface Event {
     id: number;
     date: Date;
     official: boolean;
+    isFinished: boolean;
     rounds: Round[];
     participatingPlayers: Player[];
 }

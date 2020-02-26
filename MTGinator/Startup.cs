@@ -29,6 +29,7 @@ namespace MTGinator
             });
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IEventRepository), typeof(EventRepository));
+            services.AddScoped(typeof(IResultRepository), typeof(ResultRepository));
 
             services.AddMediatR(typeof(Startup).Assembly);
         }
