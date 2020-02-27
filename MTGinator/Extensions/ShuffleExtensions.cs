@@ -6,6 +6,14 @@ namespace MTGinator.Extensions
 {
     public static  class ShuffleExtensions
     {
+        public static void ShuffleManyTimes<T>(this IList<T> list, int nbOfShuffles)
+        {
+            for (int i = 0; i < nbOfShuffles; i++)
+            {
+                list.Shuffle();
+            }
+        }
+
         public static void Shuffle<T>(this IList<T> list)
         {
             var n = list.Count;
