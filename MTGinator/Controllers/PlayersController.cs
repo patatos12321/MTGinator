@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MTGinator.Commands;
 using MTGinator.Repositories;
 using MTGinator.Models;
 
@@ -12,18 +15,19 @@ namespace MTGinator.Controllers
     {
         private readonly ILogger<PlayersController> _logger;
         private readonly IRepository<Player> _playerRepository;
+        private readonly IMediator _mediator;
 
-        public PlayersController(ILogger<PlayersController> logger, IRepository<Player> playerRepository)
+        public PlayersController(ILogger<PlayersController> logger, IRepository<Player> playerRepository, IMediator mediator)
         {
             _logger = logger;
             _playerRepository = playerRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public async Task<IEnumerable<Player>> Get()
         {
-            var players = _playerRepository.GetAll();
-            return Ok(players);
+            return await _mediator.Send(new GetPlayers());
         }
 
         [HttpPost]

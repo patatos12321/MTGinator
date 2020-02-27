@@ -18,5 +18,11 @@ namespace MTGinator.Repositories
                 .Include(x => x.Event)
                 .Find(x => x.Event.Id == id);
         }
+
+        public IEnumerable<Result> GetByPlayerId(int id)
+        {
+            return GetLiteCollection()
+                .Find(x => x.Player.Id == id);
+        }
     }
 }

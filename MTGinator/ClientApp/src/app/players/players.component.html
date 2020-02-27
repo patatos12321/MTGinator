@@ -7,17 +7,18 @@
     <tr>
       <th>Name</th>
       <th>Score (Curent season)</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let player of players">
-      <td *ngIf="player.IsInEditMode"><input [(ngModel)]="player.name" placeholder="Name" class="form-control" /></td>
-      <td *ngIf="!player.IsInEditMode">{{ player.name }}</td>
+      <td *ngIf="player.isInEditMode"><input [(ngModel)]="player.name" placeholder="Name" class="form-control" /></td>
+      <td *ngIf="!player.isInEditMode">{{ player.name }}</td>
       <td>{{ player.score }}</td>
       <td>
-        <button *ngIf="!player.IsInEditMode" type="button" class="btn btn-outline-primary btn-sm" (click)="player.IsInEditMode=true">Edit</button>
-        <button *ngIf="player.IsInEditMode" type="button" class="btn btn-outline-primary btn-sm" (click)="EditPlayer(player)">Confirm</button>
-        <button *ngIf="!player.IsInEditMode" type="button" class="btn btn-outline-danger btn-sm" (click)="DeletePlayer(player.id)">Delete</button>
+        <button *ngIf="!player.isInEditMode" type="button" class="btn btn-outline-primary btn-sm" (click)="player.isInEditMode=true">Edit</button>
+        <button *ngIf="player.isInEditMode" type="button" class="btn btn-outline-primary btn-sm" (click)="EditPlayer(player)">Confirm</button>
+        <button *ngIf="!player.isInEditMode" type="button" class="btn btn-outline-danger btn-sm" (click)="DeletePlayer(player.id)">Delete</button>
       </td>
     </tr>
   </tbody>

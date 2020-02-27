@@ -2,6 +2,22 @@
 
 <p *ngIf="loading"><em>Loading...</em></p>
 
+<!--Drafting order-->
+<div class="row mb-4" *ngIf="this.playersInOrder.length > 0">
+  <div class="col-md-12">
+    <h4>Order of players for drafting</h4>
+    <table class='table table-striped'>
+      <tbody>
+        <tr *ngFor="let player of playersInOrder">
+          <td>
+            {{player.name}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <!--Rounds-->
 <div class="row mb-4" *ngFor="let round of event.rounds">
   <div class="col-md-12">
