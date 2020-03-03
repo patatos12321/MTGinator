@@ -69,7 +69,7 @@ namespace MTGinator.Controllers
         public IEnumerable<Player> PlayersInRandomOrder(int id)
         {
             var @event = _eventRepository.GetById(id);
-            @event.ParticipatingPlayers.Shuffle();
+            @event.ParticipatingPlayers.ShuffleManyTimes(8);
             return @event.ParticipatingPlayers;
         }
 
