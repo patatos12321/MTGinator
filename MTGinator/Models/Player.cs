@@ -9,5 +9,6 @@ namespace MTGinator.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Score { get; set; }
+        public decimal WinLossRatio { get; set; }
     }
 }

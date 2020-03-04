@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Win/Loss ratio</th>
       <th>Score (Curent season)</th>
       <th></th>
     </tr>
@@ -14,6 +15,7 @@
     <tr *ngFor="let player of players">
       <td *ngIf="player.isInEditMode"><input [(ngModel)]="player.name" placeholder="Name" class="form-control" /></td>
       <td *ngIf="!player.isInEditMode">{{ player.name }}</td>
+      <td>{{ player.winLossRatio }} %</td>
       <td>{{ player.score }}</td>
       <td>
         <button *ngIf="!player.isInEditMode" type="button" class="btn btn-outline-primary btn-sm" (click)="player.isInEditMode=true">Edit</button>
